@@ -1,1 +1,554 @@
+import { useState } from "react";
+import CxdLogo from "./assets/CXD plus Logo.svg";
+import BackgroundZebra from "./assets/background-zebra.png";
 
+// ICONS
+import HomeIcon from "./assets/icons/home.svg";
+import CustomerDataIcon from "./assets/icons/customer-data.svg";
+import UsageDataIcon from "./assets/icons/usage-data.svg";
+import CompetitorIcon from "./assets/icons/competitor-data.svg";
+import ProjectLibrariesIcon from "./assets/icons/project-libraries.svg";
+import ProjectScorecardsIcon from "./assets/icons/project-scorecards.svg";
+import HelpIcon from "./assets/icons/help.svg";
+import SettingsIcon from "./assets/icons/settings.svg";
+
+// TOP NAV ITEMS
+const topMenuItems = [
+  { id: "home", label: "Home", icon: HomeIcon },
+  { id: "customerData", label: "Customer Data", icon: CustomerDataIcon },
+  { id: "usageData", label: "Usage Data", icon: UsageDataIcon },
+  { id: "competitorData", label: "Competitor Data", icon: CompetitorIcon },
+  { id: "projectLibraries", label: "Project Libraries", icon: ProjectLibrariesIcon },
+  { id: "projectScorecards", label: "Project Scorecards", icon: ProjectScorecardsIcon },
+];
+
+// BOTTOM NAV ITEMS
+const bottomMenuItems = [
+  { id: "help", label: "Help", icon: HelpIcon },
+  { id: "settings", label: "Settings", icon: SettingsIcon },
+];
+
+function App() {
+  // 🔐 LOGIN STATE
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    () => localStorage.getItem("cxd_logged_in") === "true"
+  );
+
+  const [activePage, setActivePage] = useState("home");
+  const [hoveredItem, setHoveredItem] = useState(null);
+  const [profileHovered, setProfileHovered] = useState(false);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    localStorage.setItem("cxd_logged_in", "true");
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("cxd_logged_in");
+    setIsLoggedIn(false);
+  };
+
+  // ⛔ SHOW LOGIN SCREEN FIRST
+  if (!isLoggedIn) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          background: "#0b1017",
+          padding: "1.5rem",
+        }}
+      >
+        <div
+          style={{
+            background: "#ffffff",
+            padding: "2rem 2.5rem",
+            borderRadius: 16,
+            boxShadow: "0 18px 45px rgba(0,0,0,0.35)",
+            width: "100%",
+            maxWidth: 420,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+            <img src={CxdLogo} alt="CXD+" style={{ width: 60 }} />
+            <div>
+              <div style={{ fontSize: 16, fontWeight: 600 }}>CXD+</div>
+              <div style={{ fontSize: 12, opacity: 0.6 }}>Internal CXD tools</div>
+            </div>
+          </div>
+
+          <h1 style={{ marginBottom: 8, fontSize: 20 }}>Sign in</h1>
+          <p style={{ marginBottom: 20, fontSize: 13, opacity: 0.7 }}>
+            Use your Zebra email to access the CXD+ workspace.
+          </p>
+
+          <form
+            onSubmit={handleLogin}
+            style={{ display: "flex", flexDirection: "column", gap: 12 }}
+          >
+            <input
+              type="email"
+              required
+              placeholder="you@zebra.com"
+              style={{
+                padding: "10px 12px",
+                borderRadius: 10,
+                border: "1px solid #d1d5db",
+                fontSize: 13,
+              }}
+            />
+
+            <input
+              type="password"
+              required
+              placeholder="Password"
+              style={{
+                padding: "10px 12px",
+                borderRadius: 10,
+                border: "1px solid #d1d5db",
+                fontSize: 13,
+              }}
+            />
+
+            <button
+              type="submit"
+              style={{
+                marginTop: 8,
+                padding: "10px 14px",
+                borderRadius: 999,
+                background: "#000000",
+                color: "#ffffff",
+                border: "none",
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: "pointer",
+              }}
+            >
+              Continue
+            </button>
+          </form>
+
+          <p style={{ marginTop: 12, fontSize: 11, opacity: 0.6 }}>
+            *Demo login only – you can wire this to Azure AD / SharePoint later.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // ✅ MAIN APP (UNCHANGED)
+  return (
+    <div style={styles.appShell}>
+      {/* SIDEBAR */}
+      <aside style={styles.sidebar}>
+        <div style={styles.logoArea}>
+          <img src={CxdLogo} alt="CXD+" style={{ width: 80 }} />
+        </div>
+
+        {/* TOP NAV */}
+        <nav style={styles.navTop}>
+          {topMenuItems.map((item) => {
+            const isActive = activePage === item.id;
+            const isHovered = hoveredItem === item.id;
+            return (
+              <button
+                key={item.id}
+                style={styles.navItem}
+                onClick={() => setActivePage(item.id)}
+                onMouseEnter={() => setHoveredItem(item.id)}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div
+                  style={{
+                    ...styles.navContent,
+                    ...(isActive ? styles.navContentActive : {}),
+                    ...(isHovered && !isActive ? styles.navContentHover : {}),
+                  }}
+                >
+                  {isActive && <div style={styles.navActiveGreenBar} />}
+                  <img
+                    src={item.icon}
+                    alt=""
+                    style={{
+                      ...styles.navIcon,
+                      ...(isActive ? styles.navIconActive : {}),
+                      ...(isHovered && !isActive ? styles.navIconHover : {}),
+                    }}
+                  />
+                  <span>{item.label}</span>
+                </div>
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* BOTTOM NAV */}
+        <nav style={styles.navBottom}>
+          {bottomMenuItems.map((item) => {
+            const isActive = activePage === item.id;
+            const isHovered = hoveredItem === item.id;
+            return (
+              <button
+                key={item.id}
+                style={styles.navItem}
+                onClick={() => setActivePage(item.id)}
+                onMouseEnter={() => setHoveredItem(item.id)}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div
+                  style={{
+                    ...styles.navContent,
+                    ...(isActive ? styles.navContentActive : {}),
+                    ...(isHovered && !isActive ? styles.navContentHover : {}),
+                  }}
+                >
+                  {isActive && <div style={styles.navActiveGreenBar} />}
+                  <img
+                    src={item.icon}
+                    alt=""
+                    style={{
+                      ...styles.navIcon,
+                      ...(isActive ? styles.navIconActive : {}),
+                      ...(isHovered && !isActive ? styles.navIconHover : {}),
+                    }}
+                  />
+                  <span>{item.label}</span>
+                </div>
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* PROFILE BOX */}
+        <div
+          style={{
+            ...styles.userBox,
+            ...(profileHovered ? styles.userBoxExpanded : {}),
+          }}
+          onMouseEnter={() => setProfileHovered(true)}
+          onMouseLeave={() => setProfileHovered(false)}
+        >
+          <div style={styles.avatar} />
+          <div style={{ flex: 1 }}>
+            <div style={styles.userName}>Josh Gregory</div>
+            <div style={styles.userEmail}>jg7198@zebra.com</div>
+
+            {profileHovered && (
+              <button style={styles.logoutButton} onClick={handleLogout}>
+                Log out
+              </button>
+            )}
+          </div>
+        </div>
+      </aside>
+
+      {/* MAIN AREA (scrolls) */}
+      <main style={styles.main}>
+        {activePage === "home" ? <HomePage /> : <Page title={activePage} />}
+      </main>
+    </div>
+  );
+}
+
+/* ---------------- HOME PAGE ---------------- */
+function HomePage() {
+  const [activeTab, setActiveTab] = useState("Overview");
+  const tabs = ["Overview", "Projects", "Timeline", "Scorecards"];
+
+  return (
+    <div style={styles.homeWrapper}>
+      {/* HERO IMAGE */}
+      <div
+        style={{
+          ...styles.heroImageBox,
+          backgroundImage: `url(${BackgroundZebra})`,
+        }}
+      >
+        <div style={styles.heroSearch}>
+          <input style={styles.heroSearchInput} placeholder="Search..." />
+        </div>
+      </div>
+
+      {/* OVERLAPPING WHITE BOX */}
+      <div style={styles.homeContentBox}>
+        <div style={styles.homeContentLeft}>
+          <div style={styles.homeContentAvatar} />
+          <div>
+            <div style={styles.homeContentName}>Joshua Gregory</div>
+            <div style={styles.homeContentSubtitle}>Customer Experience Design</div>
+          </div>
+        </div>
+
+        <div style={styles.homeContentTabs}>
+          {tabs.map((tab) => {
+            const isActive = tab === activeTab;
+            return (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                style={{
+                  ...styles.homeContentTab,
+                  ...(isActive ? styles.homeContentTabActive : {}),
+                }}
+              >
+                {tab}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ONLY SHOW THESE WHEN OVERVIEW IS ACTIVE */}
+      {activeTab === "Overview" && (
+        <>
+          <div style={styles.homeRow}>
+            <div style={styles.homeHalfCard}></div>
+            <div style={styles.homeHalfCard}></div>
+          </div>
+
+          <div style={styles.homeFullCard}></div>
+        </>
+      )}
+    </div>
+  );
+}
+
+/* ---------------- OTHER PAGE TEMPLATE ---------------- */
+function Page({ title }) {
+  return (
+    <div style={{ padding: 32 }}>
+      <h1 style={styles.pageTitle}>{title}</h1>
+      <p style={styles.text}>Content coming soon…</p>
+    </div>
+  );
+}
+
+/* ---------------- STYLES ---------------- */
+const styles = {
+  /* FIXED SIDEBAR — ONLY CONTENT SCROLLS */
+  appShell: {
+    display: "flex",
+    height: "100vh",
+    overflow: "hidden", // ← stops full-page scroll
+    background: "#ffffffff",
+    fontFamily: "Inter, sans-serif",
+  },
+
+  /* SCROLLABLE MAIN AREA */
+  main: {
+    flex: 1,
+    padding: 0,
+    overflowY: "auto", // ← only right side scrolls
+    overflowX: "hidden",
+  },
+
+  sidebar: {
+    width: 250,
+    background: "#FFF",
+    display: "flex",
+    flexDirection: "column",
+    padding: "28px 30px",
+    flexShrink: 0, // ← prevents sidebar from shrinking
+  },
+
+  logoArea: { marginBottom: 24, paddingLeft: 4 },
+
+  navTop: { flex: 1, display: "flex", flexDirection: "column", gap: 6 },
+  navBottom: { display: "flex", flexDirection: "column", gap: 6, marginBottom: 10 },
+
+  navItem: {
+    padding: 0,
+    border: "none",
+    background: "transparent",
+    cursor: "pointer",
+    textAlign: "left",
+  },
+
+  navContent: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    padding: "13px 15px",
+    borderRadius: 10,
+    color: "rgba(0,0,0,0.5)",
+    position: "relative",
+    transition: "0.2s ease",
+  },
+
+  navContentHover: { background: "#F0F2F9", color: "rgba(0,0,0,0.8)" },
+
+  navContentActive: {
+    background: "#dbfdc7ff",
+    fontWeight: 100,
+    color: "#000",
+    paddingLeft: 20,
+  },
+
+  navActiveGreenBar: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 6,
+    background: "#59f100ff",
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+  },
+
+  navIcon: { width: 15, opacity: 0.5, transition: "0.2s ease" },
+  navIconHover: { opacity: 0.8 },
+  navIconActive: { opacity: 1 },
+
+  userBox: {
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    padding: "10px 12px",
+    background: "#F0F1F5",
+    borderRadius: 12,
+    height: 60,
+    overflow: "hidden",
+    transition: "height 0.2s ease",
+  },
+
+  userBoxExpanded: { height: 96 },
+
+  avatar: { width: 36, height: 36, borderRadius: "50%", background: "#D0D4E0" },
+
+  userName: { fontSize: 13, fontWeight: 600 },
+  userEmail: { fontSize: 11, opacity: 0.6 },
+
+  logoutButton: {
+    marginTop: 6,
+    padding: "6px 10px",
+    borderRadius: 6,
+    border: "none",
+    background: "#E4EDFF",
+    cursor: "pointer",
+    fontSize: 11,
+  },
+
+  /* --- HOME PAGE --- */
+
+  homeWrapper: {
+    padding: 25,
+    width: "100%",
+    boxSizing: "border-box",
+  },
+
+  heroImageBox: {
+    width: "100%",
+    height: 200,
+    borderRadius: 15,
+    backgroundSize: "cover",
+    backgroundPosition: "center 60%",
+    backgroundRepeat: "no-repeat",
+    position: "relative",
+    overflow: "hidden",
+  },
+
+  heroSearch: {
+    position: "absolute",
+    top: 16,
+    right: 16,
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    padding: "8px 12px",
+    background: "rgba(255,255,255,0.9)",
+    borderRadius: 999,
+  },
+
+  heroSearchInput: {
+    border: "none",
+    outline: "none",
+    background: "transparent",
+    fontSize: 13,
+  },
+
+  /* Glass Header Box */
+  homeContentBox: {
+    height: "90px",
+    width: "calc(100% - 30px)",
+    marginLeft: 15,
+    marginRight: 15,
+    background: "rgba(255, 255, 255, 0.65)",
+    borderRadius: 15,
+    position: "relative",
+    top: -40,
+    zIndex: 2,
+    padding: "10px 16px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 16,
+    backdropFilter: "blur(12px)",
+    WebkitBackdropFilter: "blur(12px)",
+    border: "1px solid rgba(187, 187, 187, 0.4)",
+    boxSizing: "border-box",
+  },
+
+  homeContentLeft: { display: "flex", alignItems: "center", gap: 12 },
+  homeContentAvatar: {
+    width: 60,
+    height: 60,
+    borderRadius: "25%",
+    background: "#D0D4E0",
+  },
+
+  homeContentName: { fontSize: 14, fontWeight: 600 },
+  homeContentSubtitle: { fontSize: 11, color: "rgba(0,0,0,0.6)" },
+
+  homeContentTabs: { display: "flex", gap: 8 },
+
+  homeContentTab: {
+    border: "none",
+    background: "transparent",
+    padding: "6px 12px",
+    borderRadius: 999,
+    fontSize: 12,
+    cursor: "pointer",
+    color: "rgba(0,0,0,0.5)",
+  },
+
+  homeContentTabActive: {
+    background: "#111827",
+    color: "#FFF",
+  },
+
+  /* TWO HALF WIDTH CARDS */
+  homeRow: {
+    marginTop: -20,
+    paddingLeft: 15,
+    paddingRight: 15,
+    display: "flex",
+    gap: 15,
+  },
+
+  homeHalfCard: {
+    flex: 1,
+    background: "#FFF",
+    borderRadius: 15,
+    minHeight: 140,
+    boxShadow: "0 10px 25px rgba(15,23,42,0.08)",
+  },
+
+  /* FULL WIDTH CARD */
+  homeFullCard: {
+    marginTop: 15,
+    marginLeft: 15,
+    marginRight: 15,
+    background: "#FFF",
+    borderRadius: 15,
+    minHeight: 160,
+    boxShadow: "0 10px 25px rgba(15,23,42,0.08)",
+  },
+
+  pageTitle: { fontSize: 24, fontWeight: 600 },
+  text: { opacity: 0.85 },
+};
+
+export default App;
