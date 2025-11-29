@@ -1,0 +1,227 @@
+/* === overall two-card layout === */
+.ip-row {
+ display: flex;
+ width: 100%;
+ height: 400px;
+ gap: 0;
+ align-items: stretch;
+ margin-top: 24px;
+ padding-left: 70px;
+ padding-right: 70px;
+}
+.ip-card {
+ background: #F2F2F5;
+ border-radius: 18px;
+ padding: 20px 30px 30px 30px;
+ border: 1px solid #e5e7eb;
+ display: flex;
+ flex-direction: column;
+}
+/* left card: chart */
+.ip-card--chart {
+ flex: 2;
+ border-top-right-radius: 0;
+ border-bottom-right-radius: 0;
+ position: relative; /* for legend & chart shell */
+}
+/* right card: table, slightly overlapping */
+.ip-card--table {
+ flex: 1.1;
+ margin-left: -12px; /* overlap */
+ border-left: 1px solid rgba(0, 0, 0, 0.06);
+ border-top-left-radius: 0;
+ border-bottom-left-radius: 0;
+ z-index: 2;
+}
+/* headers */
+.ip-header {
+ display: flex;
+ flex-direction: column;
+ gap: 4px;
+ margin-bottom: 22px;
+ 
+}
+.ip-header h3 {
+ font-size: 0.95rem;
+ font-weight: 500 !important;
+ color: #111827;
+ margin: 0;
+}
+.ip-header p {
+ font-size: 0.78rem;
+ color: #6b7280;
+ margin: 0;
+}
+/* === legend (top-right) === */
+.ip-legend {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ font-size: 0.7rem;
+ color: #000000;
+}
+.ip-legend--top-right {
+ position: absolute;
+ top: 20px;
+ right: 30px;
+ padding: 20px 20px;
+ border-radius: 12px;
+ backdrop-filter: blur(6px);
+ 
+}
+.ip-legend-item {
+ display: inline-flex;
+ align-items: center;
+ gap: 6px;
+}
+.ip-legend-swatch {
+ width: 10px;
+ height: 10px;
+ border-radius: 999px;
+}
+.ip-legend-swatch--industry {
+ background: #2155fd;
+}
+.ip-legend-swatch--tech {
+ background: #0ea5e9;
+}
+.ip-legend-swatch--risk {
+ background: #ec4899;
+}
+/* === chart shell (gridlines + bars) === */
+.ip-chart-shell {
+ position: relative;
+ margin-top: 30px;
+ height: 330px;           /* must match chartHeight in JSX */
+ padding-left: 30px;      /* space for y-axis labels */
+}
+/* gridlines + labels (background layer) */
+.ip-grid-row {
+ position: absolute;
+ left: 0;
+ width: 100%;
+ display: flex;
+ align-items: center;
+ pointer-events: none; /* purely visual */
+}
+.ip-yaxis-label {
+ width: 32px;
+ text-align: right;
+ font-size: 0.7rem;
+ color: #9ca3af;
+ margin-right: 8px;
+}
+.ip-gridline-full {
+ flex: 1;
+ height: 1px;
+ background: #e5e7eb;
+}
+/* bars (foreground layer) */
+.ip-bars {
+ position: absolute;
+ left: 40px;            /* aligns with padding-left above */
+ right: 0;
+ bottom: -16px;
+ top: 0;
+ display: flex;
+ align-items: flex-end;
+ gap: 10px;
+ padding: 0 4px;
+}
+.ip-bar-col {
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 10px;
+}
+.ip-bar {
+ width: 20px;
+ height: 100%;
+ max-height: 100%;
+ background: #f3f4f6;
+ border-radius: 5px;
+ border-bottom-right-radius: 0;
+ border-bottom-left-radius: 0;
+ overflow: hidden;
+ display: flex;
+ flex-direction: column-reverse;
+ 
+}
+.ip-bar-seg {
+ width: 100%;
+}
+.ip-bar-seg--industry {
+ background: #2b2eff; /* violet */
+}
+.ip-bar-seg--tech {
+ background: #0ea5e9; /* cyan */
+}
+.ip-bar-seg--risk {
+ background: #ec4899; /* pink */
+}
+.ip-bar-label {
+ font-size: 0.7rem;
+ color: #6b7280;
+
+}
+/* === table === */
+.ip-table-wrapper {
+ border-radius: 14px;
+ border: 1px solid #e5e7eb;
+ background: #f9fafb;
+ padding: 10px 10px;
+ overflow: auto;
+ min-height: 260px;
+}
+.ip-table {
+ width: 100%;
+ border-spacing: 12px;
+ border-collapse: collapse;
+ font-size: 0.75rem;
+ height: 200px;
+}
+.ip-table thead tr {
+ border-bottom: 1px solid #e5e7eb;
+}
+.ip-table th{
+ padding: 10px 4px;
+ text-align: left !important;
+}
+.ip-table td {
+ padding: 20px 10px;
+ text-align: left;
+ white-space: nowrap;
+}
+.ip-table th {
+ font-weight: 600;
+ color: #6b7280;
+ font-size: 0.72rem;
+}
+.ip-table td {
+ color: #111827;
+}
+.ip-table-num {
+ text-align: right;
+}
+
+/* responsive */
+@media (max-width: 960px) {
+ .ip-row {
+   flex-direction: column;
+ }
+ .ip-card--table {
+   margin-left: 0;
+   border-top-left-radius: 18px;
+   border-bottom-left-radius: 18px;
+ }
+ .ip-card--chart {
+   border-top-right-radius: 18px;
+   border-bottom-right-radius: 18px;
+ }
+}
+.ip-table-comment {
+ white-space: normal !important;   /* allow wrapping */
+ word-wrap: break-word;            /* break long words */
+ line-height: 1.35;                /* cleaner stacked look */
+}

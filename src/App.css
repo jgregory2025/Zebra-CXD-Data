@@ -1,0 +1,885 @@
+/* ============================
+  App Shell
+============================ */
+.app {
+ min-height: 100vh;
+ width: 100%;
+ background-color: #ffffff;
+ color: #111827;
+}
+/* ============================
+  Hero Section (background_1)
+============================ */
+.hero {
+ position: relative;
+ width: 100%;
+ background-size: cover;
+ background-position: center;
+ background-repeat: no-repeat;
+ color: #f9fafb;
+ overflow: hidden; /* no visible edges */
+}
+/* Home page – full screen hero */
+.hero--full {
+ min-height: 100vh;
+}
+/* Inner pages – ~one third height hero */
+.hero--short {
+ min-height: 34vh;
+}
+/* Overlay always fills hero area */
+.hero__overlay {
+ position: absolute;
+ inset: 0; /* top:0; right:0; bottom:0; left:0 */
+ padding: 24px 40px 40px;
+ display: flex;
+ flex-direction: column;
+ /* Dark at top → lighter / more transparent at bottom */
+ background: linear-gradient(
+   to bottom,
+   rgba(0, 0, 0, 0.90) 0%,
+   rgba(0, 0, 0, 0) 100%
+ );
+ backdrop-filter: blur(4px);
+}
+/* Main hero content (card area) */
+.hero__main {
+ flex: 1;
+ display: flex;
+ justify-content: center; /* default: center for home */
+ align-items: center;
+ position: relative;
+}
+/* On short heroes (all non-home pages), put content bottom-left */
+.hero--short .hero__main {
+ justify-content: flex-start;
+ align-items: flex-end;
+ height: 100%; /* make sure we can reach the bottom */
+}
+/* On the home page (full hero), put content at the bottom */
+.hero--full .hero__main {
+ justify-content: center;     /* horizontal centre */
+ align-items: flex-end;       /* stick to bottom */
+ padding-bottom: 32px;        /* space from bottom edge */
+}
+/* Card inside hero */
+.hero__card {
+ max-width: 640px;
+ padding: 28px 32px;
+ border-radius: 20px;
+ background: rgba(5, 6, 12, 0.78);
+ border: 1px solid rgba(255, 255, 255, 0.08);
+ backdrop-filter: blur(16px);
+ box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+}
+/* Position hero card bottom-left on short pages */
+.hero--short .hero__card {
+ position: absolute;
+ left: 40px;
+ bottom: 32px;
+ margin: 0;
+}
+.hero__card h1 {
+ font-size: 2rem;
+ margin-bottom: 12px;
+}
+.hero__card p {
+ font-size: 0.98rem;
+ opacity: 0.9;
+}
+.hero__title h1 {
+ font-size: 2.8rem;       /* was 2rem */
+ font-weight: 300;        /* thinner, more elegant */
+ letter-spacing: -0.02em; /* soft tightening for Helvetica Neue */
+ margin: 0;
+ padding-bottom: 10px;
+ padding-top: 15px;
+ line-height: 1.1;
+}
+/* ============================
+  Header (logo, nav, profile)
+============================ */
+.app__header {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ margin-top: -20px;
+ gap: 24px;
+}
+/* Logo (top-left) */
+.app__logo {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ min-width: 160px;
+}
+.app__logo-img {
+ width: 100px;
+ height: 100px;
+ object-fit: contain;
+}
+ 
+/* ============================
+  Pill Nav Bar (top-middle)
+============================ */
+.app__nav {
+ position: relative; /* needed for indicator */
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ gap: 4px;
+ padding: 6px;
+ border-radius: 999px;
+ background: rgba(8, 8, 15, 0.5);
+ border: 1px solid rgba(255, 255, 255, 0.2);
+ box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+ overflow: hidden; /* hides indicator edges */
+}
+/* Sliding pill background */
+.app__nav-indicator {
+ position: absolute;
+ top: 4px;
+ bottom: 4px;
+ left: 0;
+ width: 0;
+ border-radius: 999px;
+ background: rgba(241, 241, 241, 0.2);
+ transition:
+   left 0.25s ease,
+   width 0.25s ease,
+   opacity 0.15s ease;
+ opacity: 0; /* fades in once measured */
+ z-index: 0; /* sit behind the buttons */
+}
+.app__nav-item {
+ position: relative;
+ z-index: 1; /* above the indicator */
+ padding: 8px 18px;
+ border-radius: 999px;
+ font-size: 0.82rem;
+ font-weight: 400;
+ color: #e5e7eb;
+ opacity: 0.9;
+ background: transparent;
+ border: 0;
+ text-decoration: none;
+ transition:
+   color 0.15s ease,
+   opacity 0.15s ease,
+   transform 0.12s ease;
+}
+.app__nav-item:hover {
+ opacity: 1;
+ transform: translateY(-1px);
+}
+/* Active tab text – pill is handled by .app__nav-indicator */
+.app__nav-item--active {
+ color: #ffffff;
+ opacity: 1;
+ font-weight: 500;
+}
+/* ============================
+  White Section Below Hero
+============================ */
+.app__section {
+ width: 100%;
+}
+.app__section--white {
+ background-color: #ffffff;
+ color: #111827;
+ margin-top: -1px; /* small overlap so no seam */
+}
+.app__section-inner {
+ max-width: 100%;
+ margin: 0 auto;
+ padding: 56px 20px 20px 20px;
+}
+.app__section-inner h2 {
+ font-size: 1.6rem;
+ margin-bottom: 12px;
+}
+.app__section-inner p {
+ font-size: 0.98rem;
+ opacity: 0.9;
+ margin-top: -10px;
+}
+/* ============================
+  Responsive
+============================ */
+@media (max-width: 900px) {
+ .hero__overlay {
+   padding: 16px 20px 32px;
+ }
+ .app__header {
+   flex-direction: column;
+   align-items: stretch;
+   gap: 20px;
+ }
+ .app__nav {
+   order: 3;
+   flex-wrap: wrap;
+   gap: 8px;
+ }
+ .app__profile {
+   order: 2;
+   justify-content: flex-start;
+ }
+ .hero__main {
+   align-items: flex-start;
+ }
+ .hero--short .hero__card {
+   left: 20px;
+   right: 20px;
+   bottom: 16px;
+ }
+ .app__section-inner {
+   padding: 40px 20px 56px;
+ }
+}
+/* ============================
+  Feature Strip (hover-expand)
+============================ */
+.feature-strip {
+ width: 100%;
+ margin: 0 auto;
+ overflow: hidden;
+ padding-top: 20px;
+}
+.feature-strip__inner {
+ display: flex;
+ gap: 16px;
+}
+/* Base card */
+.feature-card {
+ position: relative;
+ flex: 1;                 /* all equal by default */
+ min-width: 0;
+ height: 280px;        /* allow shrinking so all stay on-screen */
+ border-radius: 24px;
+ overflow: hidden;
+ cursor: pointer;
+ border: 1px solid #4b4b4b; 
+ background: #000000;
+ transition:
+   flex 0.9s ease,
+   transform 0.55s ease,
+   box-shadow 0.25s ease,
+   opacity 0.25s ease;
+}
+.feature-card:hover {
+ transform: translateY(-3px);
+}
+/* Hovered/active card gets more width */
+.feature-card--active {
+ flex: 2.4; /* grows wider, others shrink but stay visible */
+ box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+}
+/* Background image */
+.feature-card__image {
+ position: absolute;
+ inset: 0;
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ transition:
+   filter 0.3s ease,
+   transform 0.3s ease;
+}
+/* Blur + slight zoom on active card */
+.feature-card--active .feature-card__image {
+ filter: blur(6px) brightness(0.9);
+ transform: scale(1.05);
+}
+/* Dark gradient overlay (keeps text legible) */
+.feature-card__gradient {
+ position: absolute;
+ inset: 0;
+ background: radial-gradient(
+     circle at top left,
+     rgba(255, 255, 255, 0.05),
+     transparent 55%
+   ),
+   linear-gradient(
+     to bottom,
+     rgba(0, 0, 0, 0.0) 0%,
+     rgba(0, 0, 0, 0.9) 80%
+   );
+ pointer-events: none;
+}
+/* Content */
+.feature-card__content {
+ position: relative;
+ z-index: 1;
+ height: 100%;
+ padding: 20px 22px;
+ display: flex;
+ flex-direction: column;
+ justify-content: flex-end;
+ color: #f9fafb;
+ transition:
+   transform 0.3s ease,
+   padding 0.3s ease;
+}
+/* On active, shift text up a bit (like your left card) */
+.feature-card--active .feature-card__content {
+ padding: 24px 26px;
+ transform: translateY(-6px);
+}
+.feature-card__title {
+ font-size: 1.2rem;
+ font-weight: 400;
+ margin-bottom: 4px;
+}
+.feature-card__description {
+ font-size: 0.9rem;
+ opacity: 0.8;
+ max-height: 0;
+ overflow: hidden;
+ transition:
+   max-height 0.95s ease,
+   opacity 0.95s ease;
+}
+/* Show description only on active */
+.feature-card--active .feature-card__description {
+ max-height: 200px;
+ margin-top: 4px;
+ opacity: 0.8;
+}
+.feature-card__actions {
+ display: flex;
+ align-items: center;
+ justify-content: flex-start;   /* keep arrow left */
+ gap: 12px;
+ margin-top: 16px;
+ width: 100%;
+}
+.feature-card__arrow {
+ width: 40px;
+ height: 40px;
+ border-radius: 999px;
+ background: rgba(243, 244, 246, 0.12);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 1rem;
+ opacity: 0.9;
+ transition:
+   background 0.2s ease,
+   opacity 0.2s ease,
+   transform 0.2s ease;
+}
+.feature-card--active .feature-card__arrow {
+ opacity: 0;
+ transform: scale(0.85);
+ pointer-events: none;
+}
+/* Blue CTA right-aligned when active */
+.feature-card__cta {
+ padding: 8px 18px;
+ border-radius: 999px;
+ background: #2563eb;
+ color: #f9fafb;
+ font-size: 0.9rem;
+ border: none;
+ display: inline-flex;
+ align-items: center;
+ gap: 8px;
+ opacity: 0;
+ transform: translateY(6px);
+ pointer-events: none;
+ transition:
+   opacity 0.2s ease,
+   transform 0.2s ease,
+   background 0.2s ease;
+}
+.feature-card--active .feature-card__cta {
+ opacity: 1;
+ transform: translateY(0);
+ pointer-events: auto;
+ margin-right: -100px;      /* <-- pushes to right */
+}
+.feature-card__cta-arrow {
+ font-size: 1rem;
+}
+.feature-card__cta:hover {
+ background: #1d4ed8;
+}
+/* ============================
+  Feature strip – responsive
+============================ */
+@media (max-width: 900px) {
+ .feature-strip__inner {
+   flex-direction: row;
+   overflow-x: auto;
+ }
+ .feature-card {
+   flex: 0 0 80%;
+ }
+ .feature-card--active {
+   flex: 0 0 85%;
+ }
+}
+/* Wrapper aligns circle + text horizontally */
+.home-subtitle-wrap {
+ display: flex;
+ align-items: center;
+ gap: 10px; /* space between circle & text */
+}
+/* Circle that matches text height */
+.home-subtitle-circle {
+ width: 0.75em;    /* scales with text size */
+ height: 0.75em;
+ border-radius: 50%;
+ border: 2px solid #2563eb; /* blue outline */
+ flex-shrink: 0;   /* don't let it shrink */
+}
+/* Subtitle text styling */
+.home-subtitle {
+ font-size: 1rem;
+ font-weight: 300;
+ color: #f9fafb;
+ opacity: 0.9;
+}
+/* ============================
+  HOME INSIGHT BUILDER SECTION
+============================ */
+.home-insight-builder {
+ width: 100%;
+ background: #ffffff;
+ padding: 60px 40px 80px;
+}
+/* Layout of the two columns */
+.home-insight-inner {
+ max-width: 1400px;
+ margin: 0 auto;
+ display: flex;
+ gap: 64px;            /* a bit more space between left & right */
+ align-items: flex-start;
+}
+/* Left side: give it more width than the right (like Figma) */
+.home-insight-left {
+ flex: 1.4;            /* was 1 – wider */
+}
+/* Right side: a bit narrower */
+.home-insight-right {
+ flex: 1;
+ padding-top: 8px;
+}
+.home-insight-title-row {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ margin-bottom: 30px;
+}
+.home-insight-breadcrumb {
+ font-size: 0.95rem;
+ color: #000000;
+ opacity: 0.9;
+}
+.home-insight-form h3 {
+ font-size: 1.4rem;
+ margin-bottom: 20px;
+}
+/* Form 2-column grid */
+.home-insight-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 24px 32px;
+}
+.input-block {
+ display: flex;
+ flex-direction: column;
+}
+.input-block label {
+ font-size: 0.85rem;
+ margin-bottom: 6px;
+ color: #000000;
+}
+.input-block select {
+ border: 1px solid #e5e7eb;
+ padding: 10px 12px;
+ border-radius: 8px;
+ font-size: 0.9rem;
+ background: #fafafa;
+}
+.home-insight-actions {
+ margin-top: 24px;
+ display: flex;
+ gap: 16px;
+}
+.home-reset {
+ background: #e5e7eb;
+ padding: 10px 18px;
+ border-radius: 8px;
+ border: none;
+ font-size: 0.9rem;
+}
+.home-view-all {
+ background: #2563eb;
+ color: #fff;
+ padding: 10px 18px;
+ border-radius: 8px;
+ font-size: 0.9rem;
+ border: none;
+}
+/* Right side */
+.home-insight-right {
+ flex: 1;
+ padding-top: 18px;
+}
+.home-welcome-description {
+ width: 85%;
+ font-size: 1rem;
+ opacity: 0.8;
+ margin-bottom: 18px;
+}
+.home-loading {
+ font-size: 0.9rem;
+ color: #006aff;
+ opacity: 0.8;
+}
+/* Grey box around filters & buttons */
+.filter-box {
+ background: #f2f2f5;
+ padding: 32px 36px;            /* more breathing room inside */
+ border-radius: 20px;
+ margin-top: 16px;
+ border: 1px solid #e1e1e4;
+ box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+/* 2-column grid, but with more width per input */
+.home-insight-grid {
+ display: grid;
+ grid-template-columns: repeat(2, minmax(0, 1fr));
+ column-gap: 40px;              /* wider columns */
+ row-gap: 20px;
+}
+/* Label + input block */
+.input-block {
+ display: flex;
+ flex-direction: column;
+}
+/* Labels slightly smaller + spaced */
+.input-block label {
+ font-size: 0.8rem;
+ opacity: 0.7;
+ margin-bottom: 6px;
+}
+/* Make selects look wider & more solid */
+.input-block select {
+ width: 100%;
+ padding: 12px 14px;            /* taller, chunkier */
+ border-radius: 10px;
+ border: 1px solid #d4d4d9;
+ background: #fcfcfd;
+ font-size: 0.9rem;
+}
+.home-insight-title-row {
+ margin-bottom: 26px;    /* space from title to selector heading */
+ transform: translateY(-18px);  /* lifts it upward */
+}
+.home-insight-breadcrumb {
+ font-size: 0.9rem;
+ opacity: 0.75;
+}
+
+/* =========================================================
+   TITLE CONTROLS (EDIT THESE WHEN YOU WANT TO TWEAK TEXT)
+========================================================= */
+
+/* Home hero big title: "Design Innovation / With Our Intelligence" */
+.home-title {
+  font-size: 3.8rem !important;
+  font-weight: 400 !important;
+  line-height: 1.1 !important;
+  padding-top: 10px !important;
+}
+
+.home-title-line1,
+.home-title-line2 {
+  display: block;
+}
+
+/* Right-hand titles: "Welcome Josh." & "AI Intelligent Insight Builder" */
+.home-welcome-title{
+  font-weight: 400 !important;
+  font-size: 3rem !important;
+}
+.home-welcome-subtitle {
+  margin-top: 15px;
+  font-size: 3rem !important;
+  font-weight: 100 !important;
+  line-height: 0.8 !important;
+  margin-bottom: 18px !important;
+}
+/* ============================
+  FILTER STYLES — UPDATED
+============================ */
+/* Label text: solid black */
+.input-block label {
+ font-size: 0.85rem;
+ color: #000000 !important;      /* stronger black */
+ opacity: 1 !important;          /* remove grey look */
+ margin-bottom: 6px;
+ font-weight: 500;
+}
+/* Default dropdown input look */
+.input-block select {
+ width: 100%;
+ padding: 12px 14px;
+ border-radius: 12px;
+ border: 1px solid #d4d4d9;
+ background: #ffffff;
+ font-size: 0.9rem;
+ color: #6b7280;                 /* grey text INSIDE input */
+ transition:
+   background 0.25s ease,
+   border-color 0.25s ease,
+   color 0.25s ease;
+}
+/* Hover = subtle light-blue fill */
+.input-block select:hover {
+ background: #d9e7ff !important;  /* soft zebra-blue tint */
+ border-color: #94b9ff !important;
+}
+/* Focus = stronger blue highlight */
+.input-block select:focus {
+ background: #e0ecff !important;
+ border-color: #3b82f6 !important;
+ outline: none;
+ color: #1f2937 !important;       /* darker text when focused */
+}
+/* ============================
+  Divider Line
+============================ */
+.home-section-divider {
+ width: 100%;
+ height: 1px;
+ background: #d1d5db; /* light grey */
+ margin: 60px 0 50px;
+ opacity: 0.7;
+}
+/* ============================
+  Profile Box 
+============================ */
+.profile-wrap {
+ position: relative;
+}
+.profile-box {
+ display: flex;
+ align-items: center;
+ gap: 0.35rem;
+ padding: 0.35rem 0.8rem;
+ border-radius: 999px;
+ background: #303030;
+ cursor: pointer;
+ transition: all 0.15s ease;
+}
+.profile-box:hover {
+ background: #474747;
+ border-color: rgba(0, 0, 0, 0.25);
+}
+.profile-avatar {
+ width: 30px;
+ height: 30px;
+ border-radius: 999px;
+ object-fit: cover;
+}
+.profile-name {
+ font-size: 0.75rem;
+ font-weight: 500;
+ color: #ffffff;
+}
+.profile-caret {
+ font-size: 0.75rem;
+ color: #6b7280;
+}
+.profile-menu {
+ position: absolute;
+ top: 110%;
+ right: 0;
+ width: 150px;
+ border-radius: 0.75rem;
+ background: #272727;
+ border: 1px solid rgba(0, 0, 0, 0.12);
+ box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+ padding: 0.4rem;
+ z-index: 50;
+}
+.profile-menu-item {
+ width: 100%;
+ padding: 0.6rem 0.75rem;
+ text-align: left;
+ border-radius: 0.5rem;
+ border: none;
+ background: transparent;
+ font-size: 0.85rem;
+ cursor: pointer;
+}
+.profile-menu-item:hover {
+ background: #383838;
+}
+.profile-menu-item--logout {
+ color: #b91c1c;
+ font-weight: 400 !important;
+}
+/* ============================
+  Concept Development Layout
+============================ */
+.concept-layout {
+  margin-top: -20px;
+ display: grid;
+ grid-template-columns: 7fr 3fr; /* ≈ 70% / 30% */
+ gap: 24px;
+ align-items: flex-start;
+}
+.concept-layout__main {
+ display: flex;
+ flex-direction: column;
+ gap: 16px;
+}
+.concept-layout__side {
+ min-height: 200px;
+ /* intentionally blank for now */
+}
+.concept-back-btn {
+ align-self: flex-start;
+ padding: 10px 14px;
+ border-radius: 10px;
+ border: 1px solid #d1d5db;
+ background: #ffffff;
+ font-size: 0.85rem;
+ cursor: pointer;
+ margin-bottom: 8px;
+}
+.concept-back-btn:hover {
+ background: #f3f4f6;
+}
+/* Grid inside left 70% */
+.concept-grid {
+ display: grid;
+ grid-template-columns: repeat(2, minmax(0, 1fr));
+ grid-template-areas:
+   "summary value"
+   "tech    market"
+   "requirements requirements"
+   "risk    success";
+ gap: 16px;
+}
+/* Base panel styling */
+.concept-panel {
+ background: #f9fafb;
+ border-radius: 12px;
+ border: 1px solid #e5e7eb;
+ padding: 16px;
+ display: flex;
+ flex-direction: column;
+ gap: 8px;
+}
+/* Grid placement */
+.concept-panel--summary {
+ grid-area: summary;
+}
+.concept-panel--value {
+ grid-area: value;
+}
+.concept-panel--tech {
+ grid-area: tech;
+}
+.concept-panel--market {
+ grid-area: market;
+}
+.concept-panel--requirements {
+ grid-area: requirements;
+}
+.concept-panel--risk {
+ grid-area: risk;
+}
+.concept-panel--success {
+ grid-area: success;
+}
+/* Text styles inside concept panels */
+.concept-panel h3 {
+ font-size: 1rem;
+ margin: 0 0 4px 0;
+ color: #111827;
+}
+.concept-panel h4 {
+ font-size: 0.9rem;
+ margin: 0 0 4px 0;
+ color: #111827;
+}
+.concept-label {
+ font-size: 0.75rem;
+ text-transform: uppercase;
+ letter-spacing: 0.04em;
+ color: #6b7280;
+ margin-top: 4px;
+}
+.concept-value {
+ font-size: 0.9rem;
+ color: #111827;
+ margin: 0;
+}
+.concept-value--badge {
+ display: inline-flex;
+ align-items: center;
+ padding: 2px 8px;
+ border-radius: 999px;
+ background: #e0f2fe;
+ color: #0f172a;
+}
+/* Form-like fields */
+.concept-field {
+ display: flex;
+ flex-direction: column;
+ gap: 4px;
+ font-size: 0.8rem;
+ color: #4b5563;
+}
+.concept-field span {
+ font-weight: 500;
+}
+.concept-field textarea,
+.concept-panel textarea {
+ min-height: 56px;
+ border-radius: 8px;
+ border: 1px solid #e5e7eb;
+ padding: 6px 8px;
+ font-size: 0.85rem;
+ resize: vertical;
+}
+.concept-field textarea:focus,
+.concept-panel textarea:focus {
+ outline: none;
+ border-color: #2563eb;
+ box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.1);
+}
+.concept-save-btn {
+ align-self: flex-start;
+ padding: 10px 14px;
+ border-radius: 10px;
+ border: 1px solid #2563eb;
+ background: #2563eb;
+ color: #ffffff;
+ font-size: 0.85rem;
+ font-weight: 400 !important;
+ cursor: pointer;
+ margin-bottom: 12px;
+}
+.concept-save-btn:hover {
+ background: #1d4ed8;
+ border-color: #1d4ed8;
+}
+.concept-top-row {
+ width: 100%;
+ display: flex;
+ justify-content: space-between; /* left + right */
+ align-items: center;
+ 
+}
+.concept-save-btn--saved {
+ background: #16a34a !important; /* green */
+ border-color: #15803d !important;
+ color: #ffffff !important;
+}

@@ -1,0 +1,162 @@
+/* MAIN LAYOUT */
+.lp {
+ height: 100vh;
+ width: 100%;
+ display: flex;
+ overflow: hidden;
+ background: #ffffff;
+ font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+/* LEFT HERO */
+.lp__left {
+ flex: 0 0 45%;
+ min-height: 100vh;
+ background-size: cover;
+ background-position: center;
+ position: relative;
+}
+/* DARK OVERLAY */
+.lp__left-overlay {
+ position: absolute;
+ inset: 0;
+ background: linear-gradient(
+   to bottom right,
+   rgba(0, 0, 0, 0.55),
+   rgba(0, 0, 0, 0.35)
+ );
+ z-index: 1;
+}
+/* LOGO TOP LEFT */
+.lp__top-left {
+ position: absolute;
+ top: 30px;
+ left: 30px;
+ z-index: 2;
+}
+.lp__logo {
+ height: 70px;
+ filter: brightness(0) invert(1);
+}
+/* BOTTOM LEFT TEXT */
+.lp__bottom-left {
+ position: absolute;
+ bottom: 36px;
+ left: 24px;
+ z-index: 2;
+ display: flex;
+ flex-direction: column;
+ gap: 8px;
+}
+.lp__tagline-small {
+ font-size: 1rem;
+ color: #d1d5db;
+ margin: 0;
+}
+.lp__strapline {
+ font-size: 4rem;
+ font-weight: 500;
+ color: white;
+ line-height: 1.15;
+ margin: 0;
+}
+/* RIGHT PANEL */
+.lp__right {
+ flex: 1;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ padding: 32px;
+}
+.lp__panel {
+ width: 100%;
+ max-width: 420px;     /* smaller width */
+ background: white;
+ border-radius: 22px;
+ padding: 32px;
+ 
+}
+/* TITLE + SUBTITLE CENTERED */
+.lp__header-center {
+ text-align: center;
+ margin-bottom: 26px;
+}
+.lp__eyebrow {
+ color: #6b7280;
+ font-size: 0.75rem;
+ margin-bottom: 4px;
+}
+.lp__title {
+ font-size: 2.6rem;
+ font-weight: 600;
+ margin: 0;
+ padding-bottom: 10px;
+ color: #111827;
+}
+.lp__subtitle {
+ color: #6b7280;
+ font-size: 0.85rem;
+ margin-top: 6px;
+}
+/* FORM */
+.lp__form {
+ display: flex;
+ flex-direction: column;
+ gap: 16px;
+}
+/* INPUT FIELD WRAPPER */
+.lp__field {
+ position: relative;
+ width: 100%;
+}
+/* FLOATING LABEL (INSIDE INPUT, TOP-LEFT) */
+.lp__floating-label {
+ position: absolute;
+ top: 10px;
+ left: 16px;
+ font-size: 0.75rem;
+ color: #6b7280;
+ pointer-events: none;
+ z-index: 2;
+}
+/* INPUT */
+.lp__input {
+ width: 100%;
+ padding: 28px 16px 10px 16px;  /* makes label sit above text */
+ border-radius: 10px;           /* fully rounded */
+ border: 1px solid #d1d5db;
+ background: #f9fafb;
+ font-size: 0.9rem;
+ outline: none;
+ transition: border 0.15s ease, box-shadow 0.15s ease;
+}
+/* BLUE FOCUS STATE */
+.lp__input:focus {
+ border-color: #2563eb;
+ background: #ffffff;
+ box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+/* SUBMIT BUTTON */
+.lp__button {
+ width: 100%;
+ margin-top: 10px;
+ padding: 12px;
+ border-radius: 10px;
+ border: none;
+ background: #2563eb;
+ color: white;
+ font-size: 0.9rem;
+ cursor: pointer;
+ transition: background 0.15s ease;
+}
+.lp__button:hover {
+ background: #1d4ed8;
+}
+/* HELP LINK */
+.lp__help {
+ margin-top: 12px;
+ background: transparent;
+ border: none;
+ font-size: 0.8rem;
+ color: #6b7280;
+ cursor: pointer;
+}

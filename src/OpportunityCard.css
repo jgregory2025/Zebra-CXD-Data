@@ -1,0 +1,137 @@
+/* Card container */
+.opp-card {
+ background: #f2f2f5;
+ border-radius: 16px;
+ border: 1px solid #e5e7eb;
+ padding: 24px;
+ display: flex;
+ flex-direction: column;
+ gap: 16px;
+}
+/* When a home card has been added to workspace */
+.opp-card--added {
+ background: #e5e7eb;              /* slightly darker grey */
+ border-color: #22c55e33;          /* subtle green tint */
+ opacity: 0.9;
+}
+/* Top row */
+.opp-card__top {
+ display: flex;
+ justify-content: space-between;
+ align-items: flex-start;
+}
+/* ID row + circle (home only) */
+.opp-card__id-row {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+}
+.opp-card__circle {
+ width: 10px;
+ height: 10px;
+ border: 2px solid #2563eb;
+ border-radius: 50%;
+ display: inline-block;
+}
+.opp-card__id {
+ color: #4b5563;
+ font-size: 14px;
+}
+/* Confidence score – default HOME (right) */
+.opp-card__confidence {
+ display: flex;
+ flex-direction: column;
+ align-items: flex-end;
+ text-align: right;
+ min-width: max-content;
+ color: #2563eb;
+ font-size: 20px;
+ font-weight: 400 !important;
+}
+.opp-card__confidence-label {
+ font-size: 12px;
+ color: #2563eb;
+}
+/* WORKSPACE version – confidence moves to left */
+.opp-card__confidence--left {
+ align-items: flex-start !important;
+ text-align: left !important;
+}
+/* Title + sections (same as you had) */
+.opp-card__title {
+ font-size: 25px;
+ font-weight: 500 !important;
+ color: #111827;
+ margin: 0;
+ padding-top: 10px;
+}
+.opp-card__section h4 {
+ font-size: 14px;
+ font-weight: 400 !important;
+ margin-bottom: 4px;
+ color: #111827;
+}
+.opp-card__section p {
+ font-size: 14px;
+ color: #4b5563;
+ line-height: 1.5;
+ margin: 0;
+}
+/* Footer */
+.opp-card__footer {
+ margin-top: auto;
+ padding-top: 8px;
+}
+/* Workspace bottom buttons row */
+.opp-card__footer-btns {
+ display: flex;
+ gap: 10px;
+}
+/* Shared button style */
+.opp-card__add-btn,
+.opp-card__remove-btn,
+.opp-card__develop-btn {
+ border-radius: 999px;
+ border: 1px solid #d1d5db;
+ background: #ffffff;
+ font-size: 13px;
+ font-weight: 400;
+ color: #111827;
+ cursor: pointer;
+ padding: 6px 14px;
+ transition: background 0.15s ease, border-color 0.15s ease,
+   transform 0.05s ease, color 0.15s ease, opacity 0.15s ease;
+}
+/* Home: normal add button */
+.opp-card__add-btn:hover:not(:disabled) {
+ background: #e5f3ff;
+ border-color: #2563eb;
+}
+/* Home: added state – green-ish */
+.opp-card__add-btn--added {
+ background: #dcfce7;
+ border-color: #22c55e;
+ color: #166534;
+ cursor: default;
+}
+/* Remove button style */
+.opp-card__remove-btn {
+ border-color: #fecaca;
+ background: #fef2f2;
+ color: #b91c1c;
+}
+.opp-card__remove-btn:hover {
+ background: #fee2e2;
+ border-color: #fca5a5;
+}
+/* Develop concept hover */
+.opp-card__develop-btn:hover {
+ background: #e5f3ff;
+ border-color: #2563eb;
+}
+/* Pressed */
+.opp-card__add-btn:active:not(:disabled),
+.opp-card__remove-btn:active,
+.opp-card__develop-btn:active {
+ transform: translateY(1px);
+}
