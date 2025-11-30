@@ -16,13 +16,10 @@ import avatarImg from "./assets/avatar-placeholder.png";
 // COMPONENTS
 import NavBar from "./NavBar.jsx";
 import FeatureStrip from "./FeatureStrip.jsx";
-import OpportunityStack from "./OpportunityStack.jsx";
 import OpportunityCard from "./OpportunityCard.jsx";
-import InsightPanel from "./InsightPanel.jsx";
 import LoginPage from "./LoginPage.jsx";
-
-// SHAREPOINT SERVICE
-import { getListItems } from "./services/sharepoint.js";
+import SupabaseTest from "./SupabaseTest.jsx"; // ⬅️ your Supabase text JSX
+import GeminiFrame from "./GeminiFrame.jsx";
 
 /* ----------------------------------------
   Shared Layout (hero + white section)
@@ -32,7 +29,6 @@ function Layout({
   heroSize,
   isHome,
   setIsAuthed,
-  onAddToWorkspace,
   showWorkspace,
   workspaceItems,
   onRemoveFromWorkspace,
@@ -47,67 +43,12 @@ function Layout({
   const [isConceptSaved, setIsConceptSaved] = useState(false);
   const navigate = useNavigate();
 
-  console.log("🎨 Layout render. isHome =", isHome);
- // --- Insight Builder SharePoint data ---
- const [industries, setIndustries] = useState([]);
- const [personas, setPersonas] = useState([]);
- const [workflows, setWorkflows] = useState([]);
- const [productTypes, setProductTypes] = useState([]);
- const [technologies, setTechnologies] = useState([]);
- const [customers, setCustomers] = useState([]);
- // Selected IDs
- const [selectedIndustry, setSelectedIndustry] = useState("");
- const [selectedPersona, setSelectedPersona] = useState("");
- const [selectedWorkflow, setSelectedWorkflow] = useState("");
- const [selectedProductType, setSelectedProductType] = useState("");
- const [selectedTechnology, setSelectedTechnology] = useState("");
- const [selectedCustomer, setSelectedCustomer] = useState("");
- const [jsonOutput, setJsonOutput] = useState("");
-
   // Reset Save button when entering concept page / changing opportunity
   useEffect(() => {
     if (isConcept) {
       setIsConceptSaved(false);
     }
   }, [isConcept, selectedOpportunity]);
-
-  // Load SharePoint lists for the Insight Builder
-  // Load SharePoint lists for the Insight Builder (home page only)
- useEffect(() => {
-   console.log("🔵 useEffect (SharePoint load) fired. isHome =", isHome);
-   if (!isHome) {
-     console.log("⛔ Not home, skipping SharePoint load.");
-     return;
-   }
-   async function load() {
-     console.log("🟣 Loading SharePoint lists via getListItems…");
-     try {
-       const [ind, per, wf, pt, tech, cust] = await Promise.all([
-         getListItems("Industry"),
-         getListItems("Persona"),
-         getListItems("Workflow"),
-         getListItems("ProductType"),
-         getListItems("Technology"),
-         getListItems("Customer"),
-       ]);
-       console.log("🟢 Industry items:", ind);
-       console.log("🟢 Persona items:", per);
-       console.log("🟢 Workflow items:", wf);
-       console.log("🟢 ProductType items:", pt);
-       console.log("🟢 Technology items:", tech);
-       console.log("🟢 Customer items:", cust);
-       setIndustries(ind);
-       setPersonas(per);
-       setWorkflows(wf);
-       setProductTypes(pt);
-       setTechnologies(tech);
-       setCustomers(cust);
-     } catch (err) {
-       console.error("❌ Error loading SharePoint data:", err);
-     }
-   }
-   load();
- }, [isHome]);
 
   const handleProfileToggle = () => {
     setIsProfileOpen((prev) => !prev);
@@ -123,110 +64,6 @@ function Layout({
     setIsAuthed(false);
     navigate("/");
   };
-
-  // TEMP SAMPLE DATA FOR THE 4 OPPORTUNITY CARDS ON HOME
-  const opportunityData = [
-    {
-      id: "Opportunity 01",
-      confidence: "90%",
-      title: "Reducing Mis-Picks with RFID-Driven Accuracy",
-      why:
-        "Mis-picks are the most common pain point and directly affect Tesco’s goal to reduce shrink.",
-      designApproach:
-        "Leverage RFID technology to ensure real-time item verification during picking, providing alerts for incorrect selections.",
-    },
-    {
-      id: "Opportunity 02",
-      confidence: "84%",
-      title: "Speeding Up Picking Workflows",
-      why:
-        "Associates spend excessive time double-checking items, slowing down order fulfilment.",
-      designApproach:
-        "Streamline UI flows and introduce automated confirmation for high-confidence matches.",
-    },
-    {
-      id: "Opportunity 03",
-      confidence: "78%",
-      title: "Reducing Training Effort for New Staff",
-      why:
-        "New colleagues struggle to remember workflow steps, increasing onboarding time and error rates.",
-      designApproach:
-        "Embed inline guidance, micro-tutorials and contextual help into the picking experience.",
-    },
-    {
-      id: "Opportunity 04",
-      confidence: "71%",
-      title: "Lowering Cognitive Load in Store Operations",
-      why:
-        "Frequent screen and device switching increases mental load and the likelihood of mistakes.",
-      designApproach:
-        "Consolidate key tasks into a single view and prioritise the most important actions on-screen.",
-    },
-  ];
-
-  // Build the JSON payload for AI
-  const buildInsightPayload = () => {
-    const industry = industries.find((i) => i.Id === Number(selectedIndustry));
-    const persona = personas.find((p) => p.Id === Number(selectedPersona));
-    const workflow = workflows.find((w) => w.Id === Number(selectedWorkflow));
-    const productType = productTypes.find(
-      (pt) => pt.Id === Number(selectedProductType)
-    );
-    const technology = technologies.find(
-      (t) => t.Id === Number(selectedTechnology)
-    );
-    const customer = customers.find((c) => c.Id === Number(selectedCustomer));
-
-    return {
-      industry,
-      persona,
-      workflow,
-      productType,
-      technology,
-      customer,
-    };
-  };
-
-  const handleResetFilters = () => {
-    setSelectedIndustry("");
-    setSelectedPersona("");
-    setSelectedWorkflow("");
-    setSelectedProductType("");
-    setSelectedTechnology("");
-    setSelectedCustomer("");
-    setJsonOutput("");
-  };
-
-  const handleGenerateJson = () => {
-    const payload = buildInsightPayload();
-    setJsonOutput(JSON.stringify(payload, null, 2));
-  };
-
-  const handleCopyJson = async () => {
-    const payload = buildInsightPayload();
-    const json = JSON.stringify(payload, null, 2);
-    await navigator.clipboard.writeText(json);
-    alert("Insight JSON copied – paste into ChatGPT.");
-  };
-
-  // Filtering helpers
-  const filteredPersonas = personas.filter(
-    (p) => p.IndustryId === Number(selectedIndustry)
-  );
-
-  const filteredWorkflows = workflows.filter((w) => {
-    const matchIndustry = selectedIndustry
-      ? w.IndustryId === Number(selectedIndustry)
-      : true;
-    const matchPersona = selectedPersona
-      ? w.PersonaId === Number(selectedPersona)
-      : true; // adjust if your lookup name differs
-    return matchIndustry && matchPersona;
-  });
-
-  const filteredCustomers = customers.filter(
-    (c) => c.IndustryId === Number(selectedIndustry)
-  );
 
   return (
     <div className="app">
@@ -290,204 +127,11 @@ function Layout({
       <section className="app__section app__section--white">
         <div className="app__section-inner">
           {isHome ? (
-            <>
-              {/* HOME INSIGHT BUILDER SECTION */}
-              <section className="home-insight-builder">
-                <div className="home-insight-inner">
-                  {/* LEFT SIDE: title + filters */}
-                  <div className="home-insight-left">
-                    <div className="home-insight-title-row">
-                      <span className="home-subtitle-circle"></span>
-                      <p className="home-insight-breadcrumb">
-                        Customer Experience Design Repository
-                      </p>
-                    </div>
-                    <div className="home-insight-form">
-                      <h3>Select Project Specifications</h3>
-                      {/* GREY BOX */}
-                      <div className="filter-box">
-                        <div className="home-insight-grid">
-                          {/* Industry */}
-                          <div className="input-block">
-                            <label>Industry *</label>
-                            <select
-                              value={selectedIndustry}
-                              onChange={(e) => {
-                                setSelectedIndustry(e.target.value);
-                                setSelectedPersona("");
-                                setSelectedWorkflow("");
-                                setSelectedCustomer("");
-                              }}
-                            >
-                              <option value="">Select industry</option>
-                              {industries.map((i) => (
-                                <option key={i.Id} value={i.Id}>
-                                  {i.Title}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-
-                          {/* Persona */}
-                          <div className="input-block">
-                            <label>Persona *</label>
-                            <select
-                              value={selectedPersona}
-                              onChange={(e) => {
-                                setSelectedPersona(e.target.value);
-                                setSelectedWorkflow("");
-                              }}
-                              disabled={!selectedIndustry}
-                            >
-                              <option value="">Select persona</option>
-                              {filteredPersonas.map((p) => (
-                                <option key={p.Id} value={p.Id}>
-                                  {p.Title}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-
-                          {/* Product type */}
-                          <div className="input-block">
-                            <label>Product type *</label>
-                            <select
-                              value={selectedProductType}
-                              onChange={(e) =>
-                                setSelectedProductType(e.target.value)
-                              }
-                            >
-                              <option value="">Select product type</option>
-                              {productTypes.map((pt) => (
-                                <option key={pt.Id} value={pt.Id}>
-                                  {pt.Title}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-
-                          {/* Workflow */}
-                          <div className="input-block">
-                            <label>Workflow *</label>
-                            <select
-                              value={selectedWorkflow}
-                              onChange={(e) =>
-                                setSelectedWorkflow(e.target.value)
-                              }
-                              disabled={!selectedPersona}
-                            >
-                              <option value="">Select workflow</option>
-                              {filteredWorkflows.map((w) => (
-                                <option key={w.Id} value={w.Id}>
-                                  {w.Title}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-
-                          {/* Customer */}
-                          <div className="input-block">
-                            <label>Customer</label>
-                            <select
-                              value={selectedCustomer}
-                              onChange={(e) =>
-                                setSelectedCustomer(e.target.value)
-                              }
-                              disabled={!selectedIndustry}
-                            >
-                              <option value="">Select customer</option>
-                              {filteredCustomers.map((c) => (
-                                <option key={c.Id} value={c.Id}>
-                                  {c.Title}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-
-                          {/* Technology */}
-                          <div className="input-block">
-                            <label>Technology Focus</label>
-                            <select
-                              value={selectedTechnology}
-                              onChange={(e) =>
-                                setSelectedTechnology(e.target.value)
-                              }
-                            >
-                              <option value="">Select technology</option>
-                              {technologies.map((t) => (
-                                <option key={t.Id} value={t.Id}>
-                                  {t.Title}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-
-                        <div className="home-insight-actions">
-                          <button
-                            className="home-reset"
-                            type="button"
-                            onClick={handleResetFilters}
-                          >
-                            Reset
-                          </button>
-                          <button
-                            className="home-view-all"
-                            type="button"
-                            onClick={handleGenerateJson}
-                          >
-                            Generate insight JSON
-                          </button>
-                          <button
-                            className="home-view-all"
-                            type="button"
-                            onClick={handleCopyJson}
-                          >
-                            Copy for AI →
-                          </button>
-                        </div>
-
-                        {jsonOutput && (
-                          <pre className="home-json-preview">
-                            {jsonOutput}
-                          </pre>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* RIGHT SIDE: welcome content */}
-                  <div className="home-insight-right">
-                    <h1 className="home-welcome-title">Welcome Josh.</h1>
-                    <h2 className="home-welcome-subtitle">
-                      AI Intelligent Insight Builder
-                    </h2>
-                    <p className="home-welcome-description">
-                      Filter the specification of your program to filter through
-                      hundreds of global data metrics to identify design
-                      opportunities for our customers.
-                    </p>
-                    <p className="home-loading">Loading insights…</p>
-                  </div>
-                </div>
-              </section>
-
-              {/* DIVIDER LINE */}
-              <div className="home-section-divider"></div>
-
-              {/* FOUR GREY CARDS SECTION – OPPORTUNITY STACK */}
-              <section className="home-opportunities-section">
-                <OpportunityStack
-                  opportunities={opportunityData}
-                  onAddToWorkspace={onAddToWorkspace}
-                  workspaceItems={workspaceItems}
-                />
-              </section>
-
-              <section className="insight-panel">
-                <InsightPanel />
-              </section>
-            </>
+            // ---------- HOME: Supabase test JSX ----------
+            <><SupabaseTest />
+            <GeminiFrame /></>
+            
+            
           ) : showWorkspace ? (
             // ------------ MY WORKSPACE ------------
             <div className="opp-stack">
@@ -743,7 +387,7 @@ function App() {
   // Once logged in, show full app
   return (
     <Routes>
-      {/* HOME – full hero + insight builder */}
+      {/* HOME – full hero + Supabase test */}
       <Route
         path="/"
         element={

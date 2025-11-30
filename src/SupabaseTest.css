@@ -1,0 +1,741 @@
+/* Overall wrapper inside the white section */
+
+.supabase-test {
+
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+}
+
+/* Card styling */
+
+.supabase-card {
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  padding: 24px 28px;
+
+  box-shadow: 0 10px 30px rgba(7, 16, 38, 0.05);
+
+  border: 1px solid rgba(12, 46, 104, 0.06);
+
+}
+
+/* Header row: text left, tags right */
+
+.supabase-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+
+  align-items: flex-start;
+
+}
+
+.supabase-kicker {
+
+  font-size: 12px;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  color: #4a6aa3;
+
+  margin: 0 0 4px;
+
+}
+
+.supabase-title {
+
+  font-size: 22px;
+
+  line-height: 1.3;
+
+  margin: 0 0 8px;
+
+  font-weight: 600;
+
+  color: #0b1b3a;
+
+}
+
+.supabase-description {
+
+  margin: 0;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+
+  color: #495065;
+
+}
+
+/* Tags in top-right */
+
+.supabase-meta {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 6px;
+
+}
+
+.supabase-tag {
+
+  font-size: 11px;
+
+  padding: 4px 8px;
+
+  border-radius: 999px;
+
+  background: #edf1ff;
+
+  color: #203164;
+
+  border: 1px solid rgba(51, 102, 204, 0.25);
+
+}
+
+.supabase-tag--green {
+
+  background: #e6f7f0;
+
+  color: #0f6b3b;
+
+  border-color: rgba(15, 107, 59, 0.25);
+
+}
+
+/* --- FORM LAYOUT --- */
+
+.supabase-form {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+
+  margin-top: 8px;
+
+}
+
+.supabase-section-title {
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  color: #101837;
+
+  margin: 0 0 8px;
+
+}
+
+/* Generic label & block */
+
+.supabase-input-block {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+}
+
+.supabase-input-block--full {
+
+  grid-column: 1 / -1;
+
+}
+
+.supabase-label {
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  color: #12213f;
+
+}
+
+.supabase-label--inline {
+
+  margin-right: 12px;
+
+}
+
+/* Fields */
+
+.supabase-input {
+
+  width: 100%;
+
+  border-radius: 10px;
+
+  border: 1px solid #d5d8e5;
+
+  padding: 8px 10px;
+
+  font-size: 14px;
+
+  background: #f9fafc;
+
+  transition: border-color 0.15s ease, box-shadow 0.15s ease,
+
+    background 0.15s ease;
+
+  outline: none;
+
+  box-sizing: border-box;
+
+}
+
+.supabase-input::placeholder {
+
+  color: #a4a8b7;
+
+}
+
+.supabase-input:focus {
+
+  border-color: #2c62ff;
+
+  background: #ffffff;
+
+  box-shadow: 0 0 0 1px rgba(44, 98, 255, 0.2);
+
+}
+
+/* Textarea variation if needed */
+
+.supabase-textarea {
+
+  resize: vertical;
+
+  min-height: 80px;
+
+}
+
+/* Inline small field next to button */
+
+.supabase-input--inline {
+
+  max-width: 480px;
+
+}
+
+/* Grid layout for the main form */
+
+.supabase-grid {
+
+  display: grid;
+
+  gap: 14px;
+
+}
+
+.supabase-grid--3 {
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+}
+
+/* Row for pain point input + button */
+
+.supabase-row {
+
+  display: flex;
+
+  gap: 8px;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+}
+
+/* Toggle row for hardware/software */
+
+.supabase-toggle-row {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+  margin-top: 4px;
+
+}
+
+.supabase-toggle {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  font-size: 14px;
+
+  color: #30374b;
+
+}
+
+.supabase-toggle input[type="checkbox"] {
+
+  width: 15px;
+
+  height: 15px;
+
+}
+
+/* Pills for pain points */
+
+.supabase-pill-list {
+
+  margin: 10px 0 0;
+
+  padding: 0;
+
+  list-style: none;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+}
+
+.supabase-pill {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  padding: 4px 10px;
+
+  border-radius: 999px;
+
+  background: #f2f5ff;
+
+  border: 1px solid rgba(44, 98, 255, 0.25);
+
+  font-size: 12px;
+
+  color: #203164;
+
+}
+
+.supabase-pill-remove {
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 12px;
+
+  cursor: pointer;
+
+  color: #7a84a8;
+
+  padding: 0;
+
+}
+
+/* Buttons */
+
+.supabase-btn {
+
+  border-radius: 999px;
+
+  border: none;
+
+  padding: 8px 18px;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  background: #2c62ff;
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  white-space: nowrap;
+
+  transition: background 0.15s ease, transform 0.15s ease,
+
+    box-shadow 0.15s ease;
+
+}
+
+.supabase-btn:hover {
+
+  background: #244fd0;
+
+  box-shadow: 0 6px 16px rgba(44, 98, 255, 0.35);
+
+  transform: translateY(-1px);
+
+}
+
+.supabase-btn:active {
+
+  transform: translateY(0);
+
+  box-shadow: none;
+
+}
+
+.supabase-btn:disabled {
+
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+
+  transform: none;
+
+}
+
+.supabase-btn--ghost {
+
+  background: #f4f6ff;
+
+  color: #244fd0;
+
+  border: 1px solid rgba(44, 98, 255, 0.35);
+
+  box-shadow: none;
+
+}
+
+.supabase-btn--ghost:hover {
+
+  background: #e4ebff;
+
+  box-shadow: none;
+
+}
+
+/* Footer row: actions + status */
+
+.supabase-footer {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 12px;
+
+  flex-wrap: wrap;
+
+}
+
+.supabase-footer--actions {
+
+  border-top: 1px solid #e3e6f0;
+
+  padding-top: 10px;
+
+}
+
+.supabase-actions-left {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+}
+
+.supabase-actions-right {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+
+}
+
+/* Status / messages */
+
+.supabase-status {
+
+  font-size: 13px;
+
+}
+
+.supabase-status--primary {
+
+  color: #2f7a3b;
+
+}
+
+.supabase-status--secondary {
+
+  color: #31538f;
+
+}
+
+.supabase-status--neutral {
+
+  color: #6b7280;
+
+}
+
+.supabase-error {
+
+  font-size: 13px;
+
+  color: #b3261e;
+
+  margin: 4px 0 0;
+
+}
+
+/* --- OPPORTUNITY CARDS SECTION --- */
+
+.supabase-opps {
+
+  margin-top: 24px;
+
+}
+
+/* Section heading */
+
+.supabase-opps__heading {
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  color: #101837;
+
+  margin: 0 0 10px;
+
+}
+
+/* Grid: 4 cards desktop, then 2, then 1 */
+
+.supabase-opps__grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 14px;
+
+}
+
+/* Individual card */
+
+.supabase-opps__card {
+
+  background: #ffffff;
+
+  border-radius: 12px;
+
+  border: 1px solid #dde1f0;
+
+  padding: 12px 14px;
+
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+}
+
+/* Top row: ID + confidence */
+
+.supabase-opps__card-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+
+  color: #8a90a6;
+
+}
+
+.supabase-opps__card-id {
+
+  font-weight: 600;
+
+}
+
+.supabase-opps__card-confidence {
+
+  font-weight: 500;
+
+}
+
+/* Title */
+
+.supabase-opps__card-title {
+
+  font-size: 14px;
+
+  margin: 2px 0 4px;
+
+  color: #111827;
+
+}
+
+/* Body fields */
+
+.supabase-opps__card-body {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+}
+
+.supabase-opps__field {
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+  color: #4b5563;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 1px;
+
+}
+
+.supabase-opps__field-label {
+
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+
+  color: #9ca3af;
+
+}
+
+.supabase-opps__field-value {
+
+  font-size: 13px;
+
+}
+
+/* Hooks so you can target each type later if you want */
+
+
+/* --- RESPONSIVE --- */
+
+@media (max-width: 900px) {
+
+  .supabase-grid--3 {
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  }
+
+  .supabase-opps__grid {
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  }
+
+}
+
+@media (max-width: 640px) {
+
+  .supabase-header {
+
+    flex-direction: column;
+
+  }
+
+  .supabase-grid--3 {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .supabase-card {
+
+    padding: 18px 16px;
+
+  }
+
+  .supabase-footer {
+
+    flex-direction: column-reverse;
+
+    align-items: flex-start;
+
+  }
+
+  .supabase-input--inline {
+
+    max-width: 100%;
+
+    flex: 1;
+
+  }
+
+  .supabase-opps__grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+}
+ 
