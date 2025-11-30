@@ -19,7 +19,7 @@ import FeatureStrip from "./FeatureStrip.jsx";
 import OpportunityCard from "./OpportunityCard.jsx";
 import LoginPage from "./LoginPage.jsx";
 import SupabaseTest from "./SupabaseTest.jsx"; // ⬅️ your Supabase text JSX
-import GeminiFrame from "./GeminiFrame.jsx";
+
 
 /* ----------------------------------------
   Shared Layout (hero + white section)
@@ -128,8 +128,8 @@ function Layout({
         <div className="app__section-inner">
           {isHome ? (
             // ---------- HOME: Supabase test JSX ----------
-            <><SupabaseTest />
-            <GeminiFrame /></>
+            <SupabaseTest />
+            
             
             
           ) : showWorkspace ? (
